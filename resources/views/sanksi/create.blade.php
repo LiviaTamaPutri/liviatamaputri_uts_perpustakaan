@@ -76,7 +76,7 @@
                                     <option value="">Pilih Peminjaman</option>
                                     @foreach ($peminjamanList as $peminjaman)
                                         <option value="{{ $peminjaman->id_peminjaman }}" {{ old('id_peminjaman') == $peminjaman->id_peminjaman ? 'selected' : '' }}>
-                                            {{ $peminjaman->id_peminjaman }}
+                                            {{ $peminjaman->id_peminjaman }} - {{ $peminjaman->buku->judul }}
                                         </option>
                                     @endforeach
                                 </select>

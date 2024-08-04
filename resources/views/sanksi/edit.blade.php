@@ -50,17 +50,17 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Edit Sanksi</div>
-
                     <div class="card-body">
                         <form method="POST" action="{{ route('sanksi.update', $dataSanksi->id_sanksi) }}">
                             @csrf
                             @method('PUT')
-
+    
                             <div class="mb-3">
                                 <label for="id_anggota" class="form-label">ID Anggota</label>
                                 <select class="form-select @error('id_anggota') is-invalid @enderror" id="id_anggota" name="id_anggota" required>
+                                    <option value="">Pilih Anggota</option>
                                     @foreach ($anggotaList as $anggota)
-                                        <option value="{{ $anggota->id_anggota }}" {{ $dataSanksi->id_anggota == $anggota->id_anggota ? 'selected' : '' }}>
+                                        <option value="{{ $anggota->id_anggota }}" {{ old('id_anggota', $dataSanksi->id_anggota) == $anggota->id_anggota ? 'selected' : '' }}>
                                             {{ $anggota->nama }}
                                         </option>
                                     @endforeach
@@ -69,13 +69,14 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
+    
                             <div class="mb-3">
                                 <label for="id_peminjaman" class="form-label">ID Peminjaman</label>
                                 <select class="form-select @error('id_peminjaman') is-invalid @enderror" id="id_peminjaman" name="id_peminjaman" required>
+                                    <option value="">Pilih Peminjaman</option>
                                     @foreach ($peminjamanList as $peminjaman)
-                                        <option value="{{ $peminjaman->id_peminjaman }}" {{ $dataSanksi->id_peminjaman == $peminjaman->id_peminjaman ? 'selected' : '' }}>
-                                            {{ $peminjaman->kode_peminjaman }}
+                                        <option value="{{ $peminjaman->id_peminjaman }}" {{ old('id_peminjaman', $dataSanksi->id_peminjaman) == $peminjaman->id_peminjaman ? 'selected' : '' }}>
+                                            {{ $peminjaman->id_peminjaman }} - {{ $peminjaman->buku->judul }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -83,7 +84,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
+    
                             <div class="mb-3">
                                 <label for="jumlah_denda" class="form-label">Jumlah Denda</label>
                                 <input type="number" class="form-control @error('jumlah_denda') is-invalid @enderror" id="jumlah_denda" name="jumlah_denda" value="{{ old('jumlah_denda', $dataSanksi->jumlah_denda) }}" required>
@@ -91,15 +92,18 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <div class="mb-3">
-                                <label for="status" class="form-label">Status</label>
-                                <input type="text" class="form-control @error('status') is-invalid @enderror" id="status" name="status" value="{{ old('status', $dataSanksi->status) }}" required>
+    
+                            <div class="form-group mb-3">
+                                <label for="status">Status</label>
+                                <select name="status" id="status" class="form-select" required>
+                                    <option value="Tunggakan" {{ old('status', $dataSanksi->status) == 'Tunggakan' ? 'selected' : '' }}>Tunggakan</option>
+                                    <option value="Lunas" {{ old('status', $dataSanksi->status) == 'Lunas' ? 'selected' : '' }}>Lunas</option>
+                                </select>
                                 @error('status')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
+    
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                                 <a href="{{ route('sanksi.index') }}" class="btn btn-secondary">Kembali</a>

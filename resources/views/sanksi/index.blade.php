@@ -80,7 +80,7 @@
                                 <tr>
                                     <th scope="row">{{ $index + 1 }}</th>
                                     <td>{{ $sanksi->anggota->nama }}</td>
-                                    <td>{{ $sanksi->peminjaman->buku->judul }}</td>
+                                    <td>{{ $sanksi->peminjaman->no_buku }} - {{ $sanksi->peminjaman->buku->judul }}</td>
                                     <td>{{ $sanksi->jumlah_denda }}</td>
                                     <td>{{ $sanksi->status }}</td>
                                     <td>
