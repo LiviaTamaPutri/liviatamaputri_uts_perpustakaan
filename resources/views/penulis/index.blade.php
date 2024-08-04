@@ -20,19 +20,26 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Perpustakaan</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            
+            <div class="navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('buku.index') }}">Buku</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('rak.index') }}">Rak</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('penulis.index') }}">Penulis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('buku.index') }}">Buku</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('anggota.index') }}">Anggota</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('peminjaman.index') }}">Peminjaman</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('sanksi.index') }}">Sanksi</a>
                     </li>
                 </ul>
             </div>
@@ -46,6 +53,17 @@
                     <div class="card-header">Daftar Penulis</div>
     
                     <div class="card-body">
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if(session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                         <a href="{{ route('penulis.create') }}" class="btn btn-md btn-primary mb-3">Tambah Penulis</a>
                         <table class="table">
                             <thead>

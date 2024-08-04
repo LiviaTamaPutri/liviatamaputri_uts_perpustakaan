@@ -6,6 +6,7 @@ use App\Models\RakBuku;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 
 class RakBukuController extends Controller
 {
@@ -71,9 +72,16 @@ class RakBukuController extends Controller
      */
     public function destroy($kd_rak): RedirectResponse
     {
-        $kode_rak = RakBuku::findOrFail($kd_rak);
-        $kode_rak->delete();
+        try {
+            $kode_rak = RakBuku::findOrFail($kd_rak);
+            $kode_rak->delete();
 
-        return redirect()->route('rak.index')->with('success', 'Rak buku berhasil dihapus.');
+            return redirect()->route('rak.index')->with('success', 'Rak buku berhasil dihapus.');
+        } catch (\Illuminate\Database\QueryException $ex) {
+            // Handle the exception or log it
+            Log::error('Error deleting rak buku: ' . $ex->getMessage());
+
+            return redirect()->route('rak.index')->with('error', 'Rak buku tidak dapat dihapus karena ada data yang masih menggunakan.');
+        }
     }
 }

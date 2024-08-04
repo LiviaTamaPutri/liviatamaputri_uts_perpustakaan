@@ -8,10 +8,11 @@ use App\Models\RakBuku;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 
 class BukuController extends Controller
 {
-/**
+    /**
      * Display a listing of the resource.
      */
     public function index(): View
@@ -84,8 +85,14 @@ class BukuController extends Controller
      */
     public function destroy($id_buku)
     {
-        $buku = Buku::findOrFail($id_buku);
-        $buku->delete();
-        return redirect()->route('buku.index')->with('success', 'Buku berhasil dihapus.');
+        try {
+            $buku = Buku::findOrFail($id_buku);
+            $buku->delete();
+            return redirect()->route('buku.index')->with('success', 'Buku berhasil dihapus.');
+        } catch (\Illuminate\Database\QueryException $ex) {
+            // Handle the exception or log it
+            Log::error('Error deleting buku: ' . $ex->getMessage());
+            return redirect()->route('buku.index')->with('error', 'Buku tidak dapat dihapus karena ada data yang masih menggunakan.');
+        }
     }
 }

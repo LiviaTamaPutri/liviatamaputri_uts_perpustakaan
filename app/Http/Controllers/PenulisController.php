@@ -6,6 +6,7 @@ use App\Models\Penulis;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 
 class PenulisController extends Controller
 {
@@ -75,8 +76,14 @@ class PenulisController extends Controller
      */
     public function destroy($kd_penulis): RedirectResponse
     {
-        $kode_penulis = Penulis::findOrFail($kd_penulis);
-        $kode_penulis->delete();
-        return redirect()->route('penulis.index')->with('success', 'Penulis berhasil dihapus.');
+        try {
+            $kode_penulis = Penulis::findOrFail($kd_penulis);
+            $kode_penulis->delete();
+            return redirect()->route('penulis.index')->with('success', 'Penulis berhasil dihapus.');
+        } catch (\Illuminate\Database\QueryException $ex) {
+            // Handle the exception or log it
+            Log::error('Error deleting penulis: ' . $ex->getMessage());
+            return redirect()->route('penulis.index')->with('error', 'Penulis tidak dapat dihapus karena ada data yang masih menggunakan.');
+        }
     }
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Rak Buku</title>
+    <title>Tambah Data Anggota</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -20,7 +20,6 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Perpustakaan</a>
-            
             <div class="navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
@@ -50,24 +49,29 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Edit Rak Buku</div>
-
+                    <div class="card-header">Tambah Anggota</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('rak.update', $dataRak->kd_rak) }}">
+                        <form method="POST" action="{{ route('anggota.store') }}">
                             @csrf
-                            @method('PUT')
-
                             <div class="mb-3">
-                                <label for="lokasi" class="form-label">Lokasi</label>
-                                <input type="text" class="form-control @error('lokasi') is-invalid @enderror" id="lokasi" name="lokasi" value="{{ old('lokasi', $dataRak->lokasi) }}" required>
-                                @error('lokasi')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <label for="nama" class="form-label">Nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}" required>
                             </div>
-
                             <div class="mb-3">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                                <a href="{{ route('rak.index') }}" class="btn btn-secondary">Kembali</a>
+                                <label for="no_hp" class="form-label">No HP</label>
+                                <input type="number" class="form-control" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="3" required>{{ old('alamat') }}</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary">Tambah</button>
+                                <a href="{{ route('anggota.index') }}" class="btn btn-secondary">Kembali</a>
                             </div>
                         </form>
                     </div>

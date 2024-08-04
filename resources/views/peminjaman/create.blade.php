@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tambah Data Penulis</title>
+    <title>Tambah Data Peminjaman</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -20,7 +20,6 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Perpustakaan</a>
-            
             <div class="navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
@@ -50,59 +49,53 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Tambah Penulis Baru</div>
-
+                    <div class="card-header">Tambah Peminjaman</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('penulis.store') }}">
+                        <form method="POST" action="{{ route('peminjaman.store') }}">
                             @csrf
-
                             <div class="mb-3">
-                                <label for="nama_penulis" class="form-label">Nama Penulis</label>
-                                <input type="text" class="form-control @error('nama_penulis') is-invalid @enderror" id="nama_penulis" name="nama_penulis" value="{{ old('nama_penulis') }}" required autofocus>
-                                @error('nama_penulis')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <label for="id_anggota" class="form-label">Anggota</label>
+                                <select class="form-control" id="id_anggota" name="id_anggota" required>
+                                    <option value="">Pilih Anggota</option>
+                                    @foreach($anggota as $a)
+                                        <option value="{{ $a->id_anggota }}">{{ $a->nama }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-
                             <div class="mb-3">
-                                <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
-                                <input type="text" class="form-control @error('tempat_lahir') is-invalid @enderror" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir') }}" required>
-                                @error('tempat_lahir')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <label for="no_buku" class="form-label">Buku</label>
+                                <select class="form-control" id="no_buku" name="no_buku" required>
+                                    <option value="">Pilih Buku</option>
+                                    @foreach($buku as $b)
+                                        <option value="{{ $b->no_buku }}">{{ $b->judul }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-
                             <div class="mb-3">
-                                <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                                <input type="date" class="form-control @error('tgl_lahir') is-invalid @enderror" id="tgl_lahir" name="tgl_lahir" value="{{ old('tgl_lahir') }}" required>
-                                @error('tgl_lahir')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <label for="tgl_peminjaman" class="form-label">Tanggal Pinjam</label>
+                                <input type="date" class="form-control" id="tgl_peminjaman" name="tgl_peminjaman" value="{{ old('tgl_peminjaman') }}" required>
                             </div>
-
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
-                                @error('email')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <label for="tgl_pengembalian" class="form-label">Tanggal Kembali</label>
+                                <input type="date" class="form-control" id="tgl_pengembalian" name="tgl_pengembalian" value="{{ old('tgl_pengembalian') }}">
                             </div>
-
+                            <div class="form-group mb-3">
+                                <label for="status">Status</label>
+                                <select name="status" id="status" class="form-select" required>
+                                    <option value="Kembali">Kembali</option>
+                                    <option value="Belum">Belum</option>
+                                </select>
+                            </div>
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-primary">Tambah</button>
-                                <a href="{{ route('penulis.index') }}" class="btn btn-secondary">Kembali</a>
+                                <a href="{{ route('peminjaman.index') }}" class="btn btn-secondary">Kembali</a>
                             </div>
                         </form>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-
-
-
 </html>
-
-
-

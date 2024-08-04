@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Data Buku</title>
+    <title>Edit Peminjaman</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -20,7 +20,6 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Perpustakaan</a>
-            
             <div class="navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
@@ -50,80 +49,62 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Edit Data Buku</div>
-
+                    <div class="card-header">Edit Peminjaman</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('buku.update', $buku->no_buku) }}">
+                        <form method="POST" action="{{ route('peminjaman.update', $dataPeminjaman->id_peminjaman) }}">
                             @csrf
                             @method('PUT')
-
                             <div class="mb-3">
-                                <label for="judul" class="form-label">Judul</label>
-                                <input type="text" class="form-control @error('judul') is-invalid @enderror" id="judul" name="judul" value="{{ old('judul', $buku->judul) }}" required>
-                                @error('judul')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="edisi" class="form-label">Edisi</label>
-                                <input type="text" class="form-control @error('edisi') is-invalid @enderror" id="edisi" name="edisi" value="{{ old('edisi', $buku->edisi) }}" required>
-                                @error('edisi')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="no_rak" class="form-label">Rak</label>
-                                <select class="form-select @error('no_rak') is-invalid @enderror" id="no_rak" name="no_rak" required>
-                                    <option value="">Pilih Rak</option>
-                                    @foreach($dataRak as $rak)
-                                        <option value="{{ $rak->kd_rak }}" {{ old('no_rak', $rak->kd_rak) == $rak->kd_rak ? 'selected' : '' }}>
-                                            {{ $rak->lokasi }}
-                                        </option>
+                                <label for="id_anggota" class="form-label">Anggota</label>
+                                <select class="form-control @error('id_anggota') is-invalid @enderror" id="id_anggota" name="id_anggota" required>
+                                    <option value="">Pilih Anggota</option>
+                                    @foreach($anggota as $a)
+                                        <option value="{{ $a->id_anggota }}" {{ $a->id_anggota == $dataPeminjaman->id_anggota ? 'selected' : '' }}>{{ $a->nama }}</option>
                                     @endforeach
                                 </select>
-                                @error('no_rak')
+                                @error('id_anggota')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
                             <div class="mb-3">
-                                <label for="tahun" class="form-label">Tahun</label>
-                                <input type="date" class="form-control @error('tahun') is-invalid @enderror" id="tahun" name="tahun" value="{{ old('tahun', $buku->tahun) }}" required>
-                                @error('tahun')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="penerbit" class="form-label">Penerbit</label>
-                                <input type="text" class="form-control @error('penerbit') is-invalid @enderror" id="penerbit" name="penerbit" value="{{ old('penerbit', $buku->penerbit) }}" required>
-                                @error('penerbit')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="kd_penulis" class="form-label">Nama Penulis</label>
-                                <select class="form-select @error('kd_penulis') is-invalid @enderror" id="kd_penulis" name="kd_penulis" required>
-                                    <option value="">Pilih Penulis</option>
-                                    @foreach($dataPenulis as $penulis)
-                                        <option value="{{ $penulis->kd_penulis }}" {{ old('kd_penulis', $buku->kd_penulis) == $penulis->kd_penulis ? 'selected' : '' }}>
-                                            {{ $penulis->nama_penulis }}
-                                        </option>
+                                <label for="no_buku" class="form-label">Buku</label>
+                                <select class="form-control @error('no_buku') is-invalid @enderror" id="no_buku" name="no_buku" required>
+                                    <option value="">Pilih Buku</option>
+                                    @foreach($buku as $b)
+                                        <option value="{{ $b->no_buku }}" {{ $b->no_buku == $dataPeminjaman->no_buku ? 'selected' : '' }}>{{ $b->judul }}</option>
                                     @endforeach
                                 </select>
-                                @error('kd_penulis')
+                                @error('no_buku')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
+                            <div class="mb-3">
+                                <label for="tgl_peminjaman" class="form-label">Tanggal Pinjam</label>
+                                <input type="date" class="form-control @error('tgl_peminjaman') is-invalid @enderror" id="tgl_peminjaman" name="tgl_peminjaman" value="{{ old('tgl_peminjaman', $dataPeminjaman->tgl_peminjaman) }}" required>
+                                @error('tgl_peminjaman')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="tgl_pengembalian" class="form-label">Tanggal Kembali</label>
+                                <input type="date" class="form-control @error('tgl_pengembalian') is-invalid @enderror" id="tgl_pengembalian" name="tgl_pengembalian" value="{{ old('tgl_pengembalian', $dataPeminjaman->tgl_pengembalian) }}">
+                                @error('tgl_pengembalian')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="status">Status</label>
+                                <select name="status" id="status" class="form-select" required>
+                                    <option value="Kembali" {{ $dataPeminjaman->status == 'Kembali' ? 'selected' : '' }}>Kembali</option>
+                                    <option value="Belum" {{ $dataPeminjaman->status == 'Belum' ? 'selected' : '' }}>Belum</option>
+                                </select>
+                            </div>
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-primary">Simpan</button>
-                                <a href="{{ route('buku.index') }}" class="btn btn-secondary">Kembali</a>
+                                <a href="{{ route('peminjaman.index') }}" class="btn btn-secondary">Kembali</a>
                             </div>
                         </form>
+                        
                     </div>
                 </div>
             </div>
